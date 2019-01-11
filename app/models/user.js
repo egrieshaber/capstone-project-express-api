@@ -10,6 +10,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    minlength: 3,
+    maxlength: 12
+  },
   token: String
 }, {
   timestamps: true,
