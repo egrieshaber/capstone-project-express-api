@@ -1,3 +1,5 @@
+'use strict'
+
 // Express docs: http://expressjs.com/en/api.html
 const express = require('express')
 // Passport docs: http://www.passportjs.org/docs/
