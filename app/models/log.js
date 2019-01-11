@@ -9,8 +9,8 @@ const logSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  date: {
-    date: Date,
+  link: {
+    type: String,
     required: true
   },
   owner: {
