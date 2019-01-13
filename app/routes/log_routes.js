@@ -62,7 +62,7 @@ router.get('/logs/:id', requireToken, (req, res) => {
 // GET ALL OF MY LOGS
 // GET /logs/user
 router.get('/logs/myLogs', requireToken, (req, res) => {
-  Post.find().populate('owner', 'username').sort('-createdAt')
+  Log.find().populate('owner', 'username').sort('-createdAt')
     .then(logs => {
       // console.log(logs)
       const myLogs = []
@@ -91,11 +91,11 @@ router.get('/logs/myLogs', requireToken, (req, res) => {
 
 // CREATE
 // POST /logs
-router.log('/logs', requireToken, (req, res) => {
+router.post('/logs', requireToken, (req, res) => {
   // set owner of new log to be current user
   req.body.log.owner = req.user.id
 
-  Log.create(req.body.example)
+  Log.create(req.body.log)
     // respond to succesful `create` with status 201 and JSON of new "log"
     .then(log => {
       res.status(201).json({ log: log.toObject() })
@@ -118,7 +118,7 @@ router.patch('/logs/:id', requireToken, (req, res) => {
     .then(log => {
       // pass the `req` object and the Mongoose record to `requireOwnership`
       // it will throw an error if the current user isn't the owner
-      requireOwnership(req, example)
+      requireOwnership(req, log)
 
       // the client will often send empty strings for parameters that it does
       // not want to update. We delete any key/value pair where the value is
@@ -143,10 +143,10 @@ router.patch('/logs/:id', requireToken, (req, res) => {
 router.delete('/logs/:id', requireToken, (req, res) => {
   Log.findById(req.params.id)
     .then(handle404)
-    .then(example => {
+    .then(log => {
       // throw an error if current user doesn't own `example`
-      requireOwnership(req, example)
-      // delete the example ONLY IF the above didn't throw
+      requireOwnership(req, log)
+      // delete the log ONLY IF the above didn't throw
       log.remove()
     })
     // send back 204 and no content if the deletion succeeded
