@@ -1,7 +1,7 @@
 #!/bin/sh
 
 API="http://localhost:4741"
-URL_PATH="/logs/myLogs"
+URL_PATH="/myLogs"
 
 curl "${API}${URL_PATH}" \
   --include \

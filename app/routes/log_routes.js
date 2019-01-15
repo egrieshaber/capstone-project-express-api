@@ -38,7 +38,9 @@ router.get('/logs', requireToken, (req, res) => {
       // `logs` will be an array of Mongoose documents
       // we want to convert each one to a POJO, so we use `.map` to
       // apply `.toObject` to each one
-      return logs.map(log => log.toObject())
+      return logs.map(log => {
+        return log.toObject()
+      })
     })
     // respond with status 200 and JSON of the examples
     .then(logs => res.status(200).json({ logs: logs }))
@@ -61,10 +63,11 @@ router.get('/logs/:id', requireToken, (req, res) => {
 // SHOW ALL LOGS OF SPECIFIC USER
 // GET ALL OF MY LOGS
 // GET /logs/user
-router.get('/logs/myLogs', requireToken, (req, res) => {
+router.get('/myLogs', requireToken, (req, res) => {
+  console.log(`CAN YOU SEE MEEEEEEEEEEEEEEE`)
   Log.find().populate('owner', 'username').sort('-createdAt')
     .then(logs => {
-      // console.log(logs)
+      // console.log(logs[0])
       const myLogs = []
       logs.forEach(log => {
         // checks to see if the post owner'id matches that of the requesting user
@@ -72,7 +75,7 @@ router.get('/logs/myLogs', requireToken, (req, res) => {
         if (req.user._id.equals(log.owner._id)) {
           // console.log(`searcher is `, req.user._id)
           // console.log(`post owner is `, log.owner)
-          // console.log(`I added this log to an array`, log)
+          console.log(`I added this log to an array`, log)
           myLogs.push(log)
         }
       })
