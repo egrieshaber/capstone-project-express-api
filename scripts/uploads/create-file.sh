@@ -8,6 +8,6 @@ curl "${API}${URL_PATH}" \
   --header "Authorization: Bearer ${TOKEN}" \
   --form audio="${AUDIO_PATH}" \
   --form title="${TITLE}" \
-  --form url="${URL}" \
+  # --form url="${URL}" \
 
 echo
