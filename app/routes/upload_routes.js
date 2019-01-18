@@ -63,7 +63,7 @@ router.get('/uploads/:id', requireToken, (req, res) => {
 // CREATE
 // POST /uploads
 router.post('/uploads', [requireToken, upload.single('audio')], (req, res) => {
-  console.log(req.file, req.body)
+  // console.log(req.file, req.body)
   s3Upload(req.file.path, req.file.originalname, req.body.title)
     .then((response) => {
       console.log(response.Location)

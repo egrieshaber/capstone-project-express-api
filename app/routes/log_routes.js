@@ -64,7 +64,7 @@ router.get('/logs/:id', requireToken, (req, res) => {
 // GET ALL OF MY LOGS
 // GET /logs/user
 router.get('/myLogs', requireToken, (req, res) => {
-  console.log(`CAN YOU SEE MEEEEEEEEEEEEEEE`)
+  // console.log(`CAN YOU SEE MEEEEEEEEEEEEEEE`)
   Log.find().populate('owner', 'username').sort('-createdAt')
     .then(logs => {
       // console.log(logs[0])
@@ -75,7 +75,7 @@ router.get('/myLogs', requireToken, (req, res) => {
         if (req.user._id.equals(log.owner._id)) {
           // console.log(`searcher is `, req.user._id)
           // console.log(`post owner is `, log.owner)
-          console.log(`I added this log to an array`, log)
+          // console.log(`I added this log to an array`, log)
           myLogs.push(log)
         }
       })
