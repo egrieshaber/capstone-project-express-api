@@ -1,6 +1,6 @@
 #!/bin/bash
 
-API="https://warm-plateau-38122.herokuapp.com/"
+API="http://localhost:4741"
 URL_PATH="/uploads"
 
 curl "${API}${URL_PATH}" \
