@@ -1,206 +1,69 @@
-[![General Assembly Logo](https://camo.githubusercontent.com/1a91b05b8f4d44b5bbfb83abac2b0996d8e26c92/687474703a2f2f692e696d6775722e636f6d2f6b6538555354712e706e67)](https://generalassemb.ly/education/web-development-immersive)
+Field Recording Log - Api
 
-# express-api-template
+FRL repositories:
+FRL - Client: https://github.com/egrieshaber/capstone-project-client
+FRL - Api: https://github.com/egrieshaber/capstone-project-express-api
 
-A template for starting projects with `express` as an API. Includes
-authentication and common middlewares.
 
-## Installation
+FRL deployed sites:
+FRL - Client: https://egrieshaber.github.io/capstone-project-client/
+FRL - Api: https://git.heroku.com/warm-plateau-38122.git
 
-1.  [Download](../../archive/master.zip) this template.
-1.  Move the .zip file to your `wdi/projects/` directory and Unzip it (creating a folder) -- **NOTE:** if the folder was already unzipped, use the `mv` command line to move it to the `wdi/projects/` directory.
-1.  Rename the directory from express-api-template -> your-app-name.
-1.  Empty [`README.md`](README.md) and fill with your own content.
-1.  Move into the new project and `git init`.
-1.  Replace all instances of `'express-api-template'` with your app name.
-1.  Install dependencies with `npm install`.
-1.  Ensure that you have `nodemon` installed by running `npm install -g nodemon`.
-1.  From the root of your repository, run the following commands. They will set a SECRET_KEY for development and testing.
- ```sh
- echo SECRET_KEY_BASE_TEST=$(openssl rand -base64 66 | tr -d '\n') >> .env
- echo SECRET_KEY_BASE_DEVELOPMENT=$(openssl rand -base64 66 | tr -d '\n') >> .env
- ```
-1.  Ensure the API is functioning properly by running `npm run server`.
-1.  Once everything is working, make an initial commit.
-1.  Follow the steps in [express-api-deployment-guide](https://git.generalassemb.ly/ga-wdi-boston/express-api-deployment-guide)
+What is Field Recording Log?
+  Field Recording Log, is a place where users are able to upload their own audio links and share them in a live feed with titles and notes explaining what they want about their recordings.  This provides a meaningful way to share audio recordings and to potentially colaborate with others.
 
-## Structure
+How FRL works.
+  Client
+    When the user logs in, FRL is able to fetch the entire log database, sorting it by most to least recent.  These logs include those made by the current user and also all other users.  By toggling with a button on the top of the screen, the use is able able to see only their own logs, and also a form in which they are able to create new logs, and update their own audio files to an AWS s3 data storage bucket.
 
-Dependencies are stored in [`package.json`](package.json).
+    All log data is processed through handlebars before entering the feed.  The user is able to CRUD their own database using RESTful AJAX routes.
 
-The most important file for understanding the structure of the template is
-`server.js`. This is where the actual Express `app` object is created, where
-the middlewares and routes are registered, and more. To register a routefile,
-follow the pattern established here with `exampleRoutes` and `userRoutes`. If
-you want to add any middlewares to your app, do that here.
+  API
+    The FRL Api is built using Express with Mongoose data validation.  It recieves AJAX requests from the client and communicates with the MongoDB database to return responses.
 
-The `app` directory contains models and route files. Models are simply Mongoose
-models. To create your own, follow the patterns established in
-`app/models/example.js`. Route files are somewhat similar to controllers in
-Rails, but they cover more functionality, including serialization and deciding
-which HTTP verbs to accept and what to do with them.
+    The Api requires that all users must sign up with a username, email and password.  All logs belong to a user who is also able to update and delete logs that belong to them.  User authenticaton also allows for uploading of files to AWS s3 data storage bucket.
 
-The `config` directory holds just `db.js`, which is where you specify the name
-and URL of your database.
+Technologies Used:
 
-The `lib` directory is for code that will be used in other places in the
-application. The token authentication code is stored in `lib/auth.js`. The
-other files in `lib` deal with error handling. `custom_errors.js` is where all
-the different custom classes of errors are created. If you need some other kind
-of error message, you can add it here. There are also some functions defined
-here that are used elsewhere to check for errors. `lib/error_handler.js` is a
-function that will be used in all your `.catch`es. It catches errors, and sets
-the response status code based on what type of error got thrown.
+Client
+  HTML / CSS
+  JavaScript
+  jQuery
+  Ajax
+  Handlebars.js
+  SASS
+  Bootstrap
+  Toastr
 
-You probably will only need to interact with files in `app/models`,
-`app/routes`, and `server.js`. You'll need to edit `db/config.js` just once,
-to change the name of your app.
+API
+  JavaScript
+  Express
+  MongoDB
+  Mongoose
+  Node.js
+  AWS
 
-## Tasks
+Wireframe: https://projects.invisionapp.com/freehand/document/aKsqDnX3G
 
-Instead of `grunt`, this template uses `npm` as a task runner. This is more
-conventional for modern Express apps, and it's handy because we'll definitely
-use `npm` anyway. These are the commands available:
+ERD: https://projects.invisionapp.com/freehand/document/smziNAdWB
 
-| Command                | Effect                                                                                                      |
-|------------------------|-------------------------------------------------------------------------------------------------------------|
-| `npm run server`       | Starts a development server with `nodemon` that automatically refreshes when you change something.                                                                                         |
-| `npm test`             | Runs automated tests.                                                                                       |
-| `npm run debug-server` | Starts the server in debug mode, which will print lots of extra info about what's happening inside the app. |
+User Stories:
+  As a user I want to be able to post a log
+  As a user I want to be able to see all my logs
+  As a user I want to be able to update and delete my logs
+  As a user I want to be able to see other users' logs
+  As a user I want to be able to upload audio files to s3
+  As a user I want to be able to listen to other users' audio files
+  As a user I want to be able to download other users' audio files
 
-## API
 
-Use this as the basis for your own API documentation. Add a new third-level
-heading for your custom entities, and follow the pattern provided for the
-built-in user authentication documentation.
+Planning
+  The first day of my planning process I outlined by basic objectives and workflow in order to meet a Minimum Viable Product.  This process also included drafting a wireframe, ERD, and user stories.
 
-Scripts are included in [`scripts`](scripts) to test built-in actions. Add your
-own scripts to test your custom API.
+  I spent the first few days building and testing the API for user and logs, and also tested them in the terminal via curl-scripts.  Next, I spent time connecting the front end with continued testing.  After this I established an AWS s3 data storage bucket in order to upload audio files.  Currently I have yet to attach this option to the user logs, and it has become my next immediate goal for this project.
 
-### Authentication
+Problem Solving
+  I often referred to previous projects and turned to Stack Overflow when I came across difficulties, using error driven development to find my way towards the appropriate resources and solutions.  see also: console logs!
 
-| Verb   | URI Pattern            | Controller#Action |
-|--------|------------------------|-------------------|
-| POST   | `/sign-up`             | `users#signup`    |
-| POST   | `/sign-in`             | `users#signin`    |
-| PATCH  | `/change-password/` | `users#changepw`  |
-| DELETE | `/sign-out/`        | `users#signout`   |
-
-#### POST /sign-up
-
-Request:
-
-```sh
-curl --include --request POST http://localhost:4741/sign-up \
-  --header "Content-Type: application/json" \
-  --data '{
-    "credentials": {
-      "email": "an@example.email",
-      "password": "an example password",
-      "password_confirmation": "an example password"
-    }
-  }'
-```
-
-```sh
-scripts/sign-up.sh
-```
-
-Response:
-
-```md
-HTTP/1.1 201 Created
-Content-Type: application/json; charset=utf-8
-
-{
-  "user": {
-    "id": 1,
-    "email": "an@example.email"
-  }
-}
-```
-
-#### POST /sign-in
-
-Request:
-
-```sh
-curl --include --request POST http://localhost:4741/sign-in \
-  --header "Content-Type: application/json" \
-  --data '{
-    "credentials": {
-      "email": "an@example.email",
-      "password": "an example password"
-    }
-  }'
-```
-
-```sh
-scripts/sign-in.sh
-```
-
-Response:
-
-```md
-HTTP/1.1 200 OK
-Content-Type: application/json; charset=utf-8
-
-{
-  "user": {
-    "id": 1,
-    "email": "an@example.email",
-    "token": "33ad6372f795694b333ec5f329ebeaaa"
-  }
-}
-```
-
-#### PATCH /change-password/
-
-Request:
-
-```sh
-curl --include --request PATCH http://localhost:4741/change-password/ \
-  --header "Authorization: Token token=$TOKEN" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "passwords": {
-      "old": "an example password",
-      "new": "super sekrit"
-    }
-  }'
-```
-
-```sh
-TOKEN=33ad6372f795694b333ec5f329ebeaaa scripts/change-password.sh
-```
-
-Response:
-
-```md
-HTTP/1.1 204 No Content
-```
-
-#### DELETE /sign-out/
-
-Request:
-
-```sh
-curl --include --request DELETE http://localhost:4741/sign-out/ \
-  --header "Authorization: Token token=$TOKEN"
-```
-
-```sh
-TOKEN=33ad6372f795694b333ec5f329ebeaaa scripts/sign-out.sh
-```
-
-Response:
-
-```md
-HTTP/1.1 204 No Content
-```
-
-## [License](LICENSE)
-
-1.  All content is licensed under a CC­BY­NC­SA 4.0 license.
-1.  All software code is licensed under GNU GPLv3. For commercial use or
-    alternative licensing, please contact legal@ga.co.
+Unfinished work
+  My next, immediate goal is to automatically insert html audio players into each user log, in order for users to be able to sample each other's recordings and download as well.
